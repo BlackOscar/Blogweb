@@ -1,0 +1,57 @@
+{% extends "blogweb/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+  <article class="media content-section">
+    <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
+    <div class="media-body">
+      <div class="article-metadata">
+        <a class="mr-2" href="#">{{ post.author }}</a>
+        <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+        {% if post.author == user %}
+          <div>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' post.id %}">Update</a>
+            <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' post.id %}">Delete</a>
+          </div>
+        {% endif %}
+      </div>
+      <h2 class="article-title">{{ post.title }}</h2>
+      <p class="article-content">{{ post.content }}</p>
+    </div>  
+    <br>
+  </article>
+
+
+  <article class='media content-section'>
+    <div class="container">
+      
+    
+      {% for comment in all_comment.comment.all%}
+        <a class="mr-2" href="#">{{ comment.user.username}}</a>
+        <h4>{{comment.comment}}</h4>
+        <hr>
+      {%endfor%}
+
+    
+    </div>
+    
+ 
+  </article>
+
+  
+  <article class="media content-section">
+    <div class="container">
+      <div class="article-metadata">
+        <form method="POST", action="">
+          {% csrf_token %}
+          <div class="input-group-append">
+            Bình luận
+          </div>
+          {{form.comment|as_crispy_field}}
+  
+          <button type="submit">Bình luận</button>
+        </form>
+    </div>
+  </article>
+
+  
+{% endblock content %}

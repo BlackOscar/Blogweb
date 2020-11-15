@@ -1,0 +1,28 @@
+{% extends "blogweb/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    
+      <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <fieldset class="form-group">
+              <legend class="border-bottom mb-4">Tạo bài viết</legend>
+
+              <div class="input-group-append">
+                Tiêu đề
+              </div>
+              {{form.title|as_crispy_field}}
+
+              <div class="input-group-append">
+                Nội dung
+              </div>
+              {{form.content|as_crispy_field}}
+
+
+              
+          </fieldset>
+          <div class="form-group">
+              <button class="btn btn-outline-info" type="submit">Tạo</button>
+          </div>
+      </form>
+    </div>
+{% endblock content %}
